@@ -366,6 +366,14 @@ class PunctualityTracker(commands.Cog):
                 self.logger.warning(f"Removing stale scheduled meeting from {meeting_time}")
                 del self.scheduled_meetings[voice_channel_id]
     
+    @commands.command(name="shutdown")
+    @commands.has_permissions(administrator=True)
+    async def shutdown(self, ctx):
+        """Shut down the bot"""
+        await ctx.send("Shutting down the bot... 👋")
+        self.logger.info("Bot is shutting down...")
+        await self.bot.close()  # Shut down the bot
+
     @check_scheduled_meetings.before_loop
     async def before_check_scheduled_meetings(self):
         await self.bot.wait_until_ready()
